@@ -1,9 +1,6 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-export class CreateUser {
-  email: string;
-  password: string;
-}
+import { CreateUser } from "./types";
 @Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -14,6 +11,6 @@ export class AuthController {
   }
   @Post("/singup")
   async create(@Body() createUser: CreateUser): Promise<boolean> {
-    return await this.authService.create(createUser.email, createUser.password);
+    return await this.authService.create(createUser.email, createUser.password, createUser.nome);
   }
 }

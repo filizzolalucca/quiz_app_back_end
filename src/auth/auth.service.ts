@@ -15,9 +15,9 @@ export class AuthService {
       // Consulta o banco de dados para encontrar o usuário com o email fornecido
       const { data } = await supabase.from("users").select("*").eq("email", email).single();
       if (password === data.password) {
-        return true;
+        return data.id;
       } else {
-        throw new Error("Email ou senha incorretos");
+        return null;
       }
     } catch (error) {
       throw new HttpException(
@@ -32,26 +32,20 @@ export class AuthService {
       );
     }
   }
-  async create(email: string, password: string): Promise<boolean> {
+  async create(email: string, password: string, nome: string): Promise<boolean> {
     const supabaseUrl = "https://xsvmwhhwvlncotinzvyi.supabase.co";
     const supabaseKey =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhzdm13aGh3dmxuY290aW56dnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTM4NDI0MTQsImV4cCI6MjAyOTQxODQxNH0.WcSZvdYSbjTCA0pMvsSjpPvZD9toyIuM7OGcdd1JFJk";
     const supabase = createClient(supabaseUrl, supabaseKey);
+    if (!email || !password || !nome || !email.includes("@")) {
+      return false;
+    }
 
-    const { error } = await supabase.from("users").insert({ email, password });
+    const { error } = await supabase.from("users").insert({ email, password, nome });
     if (!error) {
       return true;
     } else {
-      throw new HttpException(
-        {
-          status: HttpStatus.FORBIDDEN,
-          error: error.message,
-        },
-        HttpStatus.FORBIDDEN,
-        {
-          cause: error.message,
-        },
-      );
+      return false;
     }
   }
 }

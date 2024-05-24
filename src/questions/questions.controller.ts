@@ -1,5 +1,6 @@
-import { Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post } from "@nestjs/common";
 import { QuestionsService } from "./questions.service";
+import { Questionario } from "./types";
 export class CreateQuestions {
   questions: string;
   id: string;
@@ -9,7 +10,9 @@ export class QuestionsController {
   constructor(private readonly questionsService: QuestionsService) {}
 
   @Post("/questions")
-  async getQuestionsWithAnswers(): Promise<{ question: string; answers: string[] }[]> {
-    return await this.questionsService.getQuestionsAndAnswers();
+  async getQuestionsWithAnswers(
+    @Body() questionario: Questionario,
+  ): Promise<{ question: string; answers: { resposta: string; correta: boolean }[] }[]> {
+    return await this.questionsService.getQuestionsAndAnswers(questionario.id_materia);
   }
 }
