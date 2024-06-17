@@ -47,7 +47,7 @@ export class QuestionsService {
         // Se a resposta já existe, incrementa o número do questionário
         numero_questionario_realizado = respostaData.numero_questionario_realizado;
 
-        // Incrementa o número do questionário seguindo a lógica desejada
+        // Incrementa o número do questionário 
         if (numero_questionario_realizado === 4) {
           numero_questionario_realizado = 1;
         } else {
