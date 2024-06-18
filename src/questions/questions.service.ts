@@ -12,7 +12,7 @@ export class QuestionsService {
     id_materia: number,
     id_usuario: number,
   ): Promise<{
-    numero_questionario_realizado: number;
+    ajuda: string;
     questions: { question: string; answers: { resposta: string; correta: boolean }[] }[];
   }> {
     try {
@@ -47,7 +47,7 @@ export class QuestionsService {
         // Se a resposta já existe, incrementa o número do questionário
         numero_questionario_realizado = respostaData.numero_questionario_realizado;
 
-        // Incrementa o número do questionário 
+        // Incrementa o número do questionário
         if (numero_questionario_realizado === 4) {
           numero_questionario_realizado = 1;
         } else {
@@ -105,9 +105,18 @@ export class QuestionsService {
           });
         return { question: questao.questoes, answers };
       });
+      const { data: materiaData, error: materiaError } = await this.supabase
+        .from("Materia")
+        .select("ajuda")
+        .eq("id", id_materia)
+        .single();
+      if (materiaError) {
+        throw new Error("Erro ao buscar as ajuda ");
+      }
+      const ajuda = materiaData.ajuda;
 
       return {
-        numero_questionario_realizado,
+        ajuda,
         questions: questionAnswerPairs,
       };
     } catch (error) {

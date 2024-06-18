@@ -7,7 +7,7 @@ export class QuestionsController {
 
   @Post("/questions")
   async getQuestionsWithAnswers(@Body() questionario: Questionario): Promise<{
-    numero_questionario_realizado: number;
+    ajuda: string;
     questions: { question: string; answers: { resposta: string; correta: boolean }[] }[];
   }> {
     return await this.questionsService.getQuestionsAndAnswers(questionario.id_materia, questionario.id_usuario);
