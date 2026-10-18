@@ -1,73 +1,51 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+# Sustainability Quiz: Back End
+
+REST API for a sustainability quiz app: it handles student sign-up and login, serves quiz questions by subject and records each student's score. Built with NestJS and Supabase (PostgreSQL).
+
+University project (2024) by Emanuel, Lucca and Pedro. The mobile app lives in [quiz_app_front_end_flutter](https://github.com/filizzolalucca/quiz_app_front_end_flutter).
+
+<p>
+  <img src="https://img.shields.io/badge/NestJS-E0234E?logo=nestjs&logoColor=white" alt="NestJS">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Supabase-3FCF8E?logo=supabase&logoColor=white" alt="Supabase">
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Features
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- **Accounts**: sign-up, login and name change, with passwords hashed using bcrypt
+- **Quizzes by subject**: returns a set of questions with their answers and a help text, picking the next questionnaire the student hasn't taken yet
+- **Scores**: stores the result of each quiz attempt per student and subject
 
-## Description
+## Endpoints
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+| Method | Route | Description |
+|---|---|---|
+| `POST` | `/auth/singup` | Create a student account |
+| `POST` | `/auth/signinv2` | Log in with email and password |
+| `POST` | `/auth/editName` | Change the student's name |
+| `POST` | `/questions/questions` | Get the next quiz for a subject |
+| `POST` | `/storeData/storeData` | Save a quiz score |
 
-## Installation
+## Project structure
 
-```bash
-$ npm install
+```
+src/
+├── main.ts            # Starts the server on port 3000
+├── app.module.ts
+├── auth/              # Sign-up, login, name change
+├── questions/         # Quiz questions and answers
+└── storeData/         # Score storage
 ```
 
-## Running the app
+## Getting started
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
+npm run start:dev
 ```
 
-## Test
+The API runs at `http://localhost:3000`. It expects a Supabase project with `users`, `Resposta` and question tables. Update the Supabase URL and key in the services to point to your own project.
 
-```bash
-# unit tests
-$ npm run test
+## Authors
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Emanuel, Pedro and **Lucca Filizzola** · [@filizzolalucca](https://github.com/filizzolalucca)
